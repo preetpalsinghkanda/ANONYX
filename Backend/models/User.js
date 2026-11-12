@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { type } = require("node:os");
 
 const userSchema = new mongoose.Schema(
   {
@@ -25,6 +26,13 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+
+    secretPin: {
+      type: Number,
+      // unique : true ,
+      required: true,
+    },
+
     secretCode: {
       type: String,
       unique: true,
@@ -33,6 +41,11 @@ const userSchema = new mongoose.Schema(
 
     isActiveUser: {
       type: Boolean,
+    },
+
+    isBanned: {
+      type: Boolean,
+      default: false,
     },
   },
 

@@ -4,6 +4,8 @@ const { Server } = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 
+// const code = require("./utils/secretCode");
+
 //database
 const connectDataBase = require("./config/database");
 
@@ -26,7 +28,10 @@ connectDataBase();
 
 //test route !
 app.get("/", (req, res) => {
-  res.send("server on");
+  res.status(200).json({
+    message: "server on",
+    // secretCode: code(),
+  });
 });
 
 SI.on("connection", (socket) => {
