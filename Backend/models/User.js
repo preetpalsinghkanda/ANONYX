@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { type } = require("node:os");
 
 const userSchema = new mongoose.Schema(
   {
@@ -46,6 +45,15 @@ const userSchema = new mongoose.Schema(
     isBanned: {
       type: Boolean,
       default: false,
+    },
+    isVIP: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    description: {
+      type: String,
+      required: true,
     },
   },
 

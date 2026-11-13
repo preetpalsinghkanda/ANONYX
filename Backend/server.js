@@ -4,7 +4,7 @@ const { Server } = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 
-// const code = require("./utils/secretCode");
+// const code = require("./utils/secretPin");
 
 //database
 const connectDataBase = require("./config/database");
