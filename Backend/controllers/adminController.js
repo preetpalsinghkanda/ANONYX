@@ -1,10 +1,12 @@
 const User = require("../models/User");
 const genSecretCode = require("../utils/secretCode");
+const genSecretPin = require("../utils/secretPin");
 
 const createUser = async (req, res) => {
   try {
     const { realName, email, isVIP, description } = req.body;
     const secretCode = genSecretCode();
+    const secretPin = genSecretPin();
 
     const alreadyUser = await User.findOne({ email });
 
@@ -31,8 +33,9 @@ const createUser = async (req, res) => {
         realName: newUser.realName,
         email: newUser.email,
         isActiveUser: newUser.isActiveUser,
+        secretCode,
+        secretPin,
         isVIP: newUser.isVIP,
-        description: newUser.description,
       },
     });
   } catch (err) {
@@ -41,3 +44,5 @@ const createUser = async (req, res) => {
     });
   }
 };
+
+module.exports = { createUser };

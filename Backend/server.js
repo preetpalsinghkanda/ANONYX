@@ -4,6 +4,8 @@ const { Server } = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 
+const adminRoutes = require("./routes/admin.js");
+
 // const code = require("./utils/secretPin");
 
 //database
@@ -33,6 +35,9 @@ app.get("/", (req, res) => {
     // secretCode: code(),
   });
 });
+
+//admin routes
+app.use("/admin", adminRoutes);
 
 SI.on("connection", (socket) => {
   console.log(socket.id, "connected");
