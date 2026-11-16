@@ -5,6 +5,7 @@ const http = require("http");
 const cors = require("cors");
 
 const adminRoutes = require("./routes/admin.js");
+const authRoutes = require('./routes/auth.js')
 
 // const code = require("./utils/secretPin");
 
@@ -38,6 +39,15 @@ app.get("/", (req, res) => {
 
 //admin routes
 app.use("/admin", adminRoutes);
+
+
+
+//auth route
+app.use('/auth', authRoutes)
+
+
+
+
 
 SI.on("connection", (socket) => {
   console.log(socket.id, "connected");

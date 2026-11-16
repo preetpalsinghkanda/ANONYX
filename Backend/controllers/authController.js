@@ -20,7 +20,7 @@ const loginHandle = async (req, res) => {
     }
 
 
-    if (user.secretPin !== secretPin) {
+    if (user.secretPin !== Number(secretPin)) {
       return res.status(401).json({
         message: "INCORRECT Secret Code or PIN"
       })
