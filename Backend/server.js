@@ -52,6 +52,10 @@ app.use('/auth', authRoutes)
 SI.on("connection", (socket) => {
   console.log(socket.id, "connected");
 
+  socket.on("send_message", (data) => {
+    console.log("msg", data)
+  })
+  
   socket.on("disconnect", () => {
     console.log(socket.id, "disconnect");
   });
