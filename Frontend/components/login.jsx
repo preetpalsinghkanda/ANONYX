@@ -13,15 +13,15 @@ const Login = () => {
       {
         y: 0,
         opacity: 1,
-        duration: 3,
-        stagger: 0.4,
+        duration: 1,
+        stagger: 0.2,
         ease: "power2.out",
       },
     );
   });
 
   return (
-    <div className="border flex h-screen  items-center justify-center relative">
+    <div className=" flex h-screen  items-center justify-center relative">
       <div className=" absolute w-180 h-60 z-2 bg-white bottom-15"></div>
 
       <h1

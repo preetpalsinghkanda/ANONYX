@@ -8,14 +8,28 @@ import {
   faDiscord,
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const LoginPage = () => {
   const random = Math.floor(Math.random() * images.length);
   const randomImg = images[random];
 
+  useGSAP(() => {
+    gsap.to(
+      ".anonyx",
+      {
+        left: 2,
+        duration: 1.2,
+        delay: 3,
+      },
+      "<",
+    );
+  });
+
   return (
     <div className="flex relative bg-[#14141413] items-center justify-center h-screen">
-      <span className="font-extrabold [-webkit-text-stroke:6px_white] rotate-[270deg] absolute left-2 font-fira text-[9rem]">
+      <span className="font-extrabold anonyx [-webkit-text-stroke:4px_white] rotate-[270deg] absolute left-40 font-modak text-[8rem]">
         ANONYX
       </span>
       <div
