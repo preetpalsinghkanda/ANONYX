@@ -2,7 +2,7 @@ import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const login = () => {
+const Login = () => {
   useGSAP(() => {
     gsap.fromTo(
       ".login span",
@@ -38,4 +38,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

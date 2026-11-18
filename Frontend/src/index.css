@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+    --font-modak: "Modak", system-ui ;
+    --font-fira: "Fira Sans", sans-serif;
+}
+
 * {
     box-sizing: border-box;
 }
