@@ -1,13 +1,27 @@
 import React from "react";
 import images from "../src/data/images";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInstagram,
+  faGithub,
+  faPinterest,
+  faDiscord,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 const LoginPage = () => {
   const random = Math.floor(Math.random() * images.length);
   const randomImg = images[random];
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className=" border-4 p-2 rounded-4xl flex">
+    <div className="flex relative bg-[#14141413] items-center justify-center h-screen">
+      <span className="font-extrabold [-webkit-text-stroke:6px_white] rotate-[270deg] absolute left-2 font-fira text-[9rem]">
+        ANONYX
+      </span>
+      <div
+        style={{ boxShadow: "0px 5px 50px 10px #00000033" }}
+        className=" bo bg-white p-2  rounded-4xl flex"
+      >
         <div className="h-150 relative w-120">
           <img
             className="h-full w-full rounded-4xl object-cover"
@@ -20,7 +34,7 @@ const LoginPage = () => {
         </div>
 
         <div className="py-8 relative  px-18">
-          <h2 className="text-center font-modak text-4xl font">Welcome</h2>
+          <h2 className="text-center font-modak text-5xl font">Welcome</h2>
           <div className="">
             <div className="flex mt-20 flex-col gap-4">
               <input
@@ -41,12 +55,42 @@ const LoginPage = () => {
                 <span className="text-[#EB4338]">PIN</span>?
               </span>
             </div>
-            <button className="cursor-pointer mt-6 font-fira font-extrabold  w-full bg-[#EB4338] rounded-full p-2 text-white text-xl">
+            <button
+              style={{ boxShadow: "0px 5px 1px 1px #eb443899" }}
+              className="cursor-pointer mt-6 font-fira font-extrabold  w-full bg-[#EB4338] rounded-full p-2 text-white text-xl"
+            >
               Login
             </button>
           </div>
 
-          <div className="text-center  left-0 text-center w-full absolute  bottom-0">
+          <div className="flex gap-2 flex-col mt-20">
+            <span className="text-sm font-fima  text-center">Follow us on</span>
+            <div className="gap-2 flex mx-auto">
+              <a href="https://www.instagram.com/">
+                <FontAwesomeIcon
+                  icon={faInstagram}
+                  className="cursor-pointer"
+                />
+              </a>
+              <a href="https://www.github.com/">
+                <FontAwesomeIcon icon={faGithub} className="cursor-pointer" />
+              </a>
+              <a href="https://in.pinterest.com/">
+                <FontAwesomeIcon
+                  icon={faPinterest}
+                  className="cursor-pointer"
+                />
+              </a>
+              <a href="https://discord.com/">
+                <FontAwesomeIcon icon={faDiscord} className="cursor-pointer" />
+              </a>
+              <a href="https://x.com/">
+                <FontAwesomeIcon icon={faXTwitter} className="cursor-pointer" />
+              </a>
+            </div>
+          </div>
+
+          <div className="text-center   left-0  w-full absolute  bottom-8">
             <span className="text-sm font-fira">
               Don't have an account?{" "}
               <span className="text-[#EB4338]">Request now</span>
