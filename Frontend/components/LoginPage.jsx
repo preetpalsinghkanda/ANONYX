@@ -12,11 +12,13 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import api from "../src/lib/api";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [secretCode, setSecretCode] = useState("");
   const [secretPin, setSecretPin] = useState("");
   const [isEyeOn, setIsEyeOn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const random = Math.floor(Math.random() * images.length);
   const randomImg = images[random];
@@ -32,6 +34,26 @@ const LoginPage = () => {
       "<",
     );
   });
+
+  const handleLogin = async (x) => {
+        x.preventDefault()
+
+    if(!secretCode.trim() || !secretPin.trim() ){
+      return toast.error("Enter valid CODE or PIN!")
+    }
+
+
+    setLoading(true);
+    try {
+      const res = await api.post("/auth/login", { secretCode, secretPin });
+
+      toast.success("Login Success :)");
+    } catch (err) {
+      toast.error(err.message || "Login Failed :(");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex relative bg-[#14141413] items-center justify-center h-screen">
@@ -55,6 +77,7 @@ const LoginPage = () => {
 
         <div className="py-8 relative  px-18">
           <h2 className="text-center font-modak text-5xl font">Welcome</h2>
+          <form action="" onSubmit={handleLogin}>
           <div className="">
             <div className="flex mt-20 flex-col gap-4 relative">
               <input
@@ -102,12 +125,13 @@ const LoginPage = () => {
               </span>
             </div>
             <button
+            type="submit"
               style={{ boxShadow: "0px 5px 1px 1px #eb443899" }}
               className="cursor-pointer  mt-6 font-fira font-extrabold  w-full bg-[#EB4338] rounded-full p-2 text-white text-xl"
             >
               Login
             </button>
-          </div>
+          </div></form>
 
           <div className="flex gap-2 flex-col mt-20">
             <span className="text-sm font-fima  text-center">Follow us on</span>

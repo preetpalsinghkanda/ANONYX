@@ -4,6 +4,8 @@ import LoginPage from "../components/LoginPage.jsx";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import api from "./lib/api.js";
+import { Toaster } from "react-hot-toast";
+import Dashboard from "../components/Dashboard.jsx";
 
 const App = () => {
   const mainContainer = useRef(null);
@@ -45,7 +47,8 @@ const App = () => {
 
   return (
     <div ref={mainContainer} className="h-screen w-full overflow-hidden">
-      <div className="loginText absolute inset-0 ">
+      <Toaster position="top-right" />
+      {/* <div className="loginText absolute inset-0 ">
         <Login />
       </div>
       <div
@@ -53,7 +56,9 @@ const App = () => {
         className="loginPage  absolute inset-0 "
       >
         <LoginPage />
-      </div>
+      </div> */}
+
+      <Dashboard/>
     </div>
   );
 };
