@@ -17,13 +17,24 @@ const server = http.createServer(app);
 
 const SI = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
 //handle middleware
-app.use(cors());
+app.use(cors(
+
+  {
+    origin: "http://localhost:5173",
+    methods : ["GET","POST", "PUT", "DELETE"],
+    credentials : true,
+
+  }
+));
+
+
 app.use(express.json());
 
 //mongo connect
@@ -55,7 +66,7 @@ SI.on("connection", (socket) => {
   socket.on("send_message", (data) => {
     console.log("msg", data)
   })
-  
+
   socket.on("disconnect", () => {
     console.log(socket.id, "disconnect");
   });

@@ -1,22 +1,20 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Login from "../components/Login.jsx";
 import LoginPage from "../components/LoginPage.jsx";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import api from "./lib/api.js";
 
 const App = () => {
   const mainContainer = useRef(null);
 
   useGSAP(
     () => {
-
-      gsap.set(".loginPage",{
-        yPercent :100,
-        backgroundColor: "white"
-      })
+      gsap.set(".loginPage", {
+        yPercent: 100,
+        backgroundColor: "white",
+      });
       const t1 = gsap.timeline({ delay: 2 });
-
-
 
       t1.to(".loginText", {
         yPercent: -30,
@@ -37,6 +35,13 @@ const App = () => {
     },
     { scope: mainContainer },
   );
+
+  useEffect(() => {
+    api
+      .get("/")
+      .then((response) => console.log("backend:", response.data))
+      .catch((err) => console.log("err", err.message));
+  }, []);
 
   return (
     <div ref={mainContainer} className="h-screen w-full overflow-hidden">

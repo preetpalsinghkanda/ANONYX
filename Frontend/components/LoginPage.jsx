@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import images from "../src/data/images";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,10 +8,16 @@ import {
   faDiscord,
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import api from "../src/lib/api";
 
 const LoginPage = () => {
+  const [secretCode, setSecretCode] = useState("");
+  const [secretPin, setSecretPin] = useState("");
+  const [isEyeOn, setIsEyeOn] = useState(false);
+
   const random = Math.floor(Math.random() * images.length);
   const randomImg = images[random];
 
@@ -50,17 +56,43 @@ const LoginPage = () => {
         <div className="py-8 relative  px-18">
           <h2 className="text-center font-modak text-5xl font">Welcome</h2>
           <div className="">
-            <div className="flex mt-20 flex-col gap-4">
+            <div className="flex mt-20 flex-col gap-4 relative">
               <input
+                maxLength={8}
+                value={secretCode}
+                onChange={(x) => setSecretCode(x.target.value)}
                 placeholder="CODE"
-                className=" border-2 border-[#7e7c7c4e] tracking-[8px] uppercase focus: font-fira font-medium placeholder:tracking-normal text-xl placeholder:text-center text-center rounded-xl px-2 py-2 focus:outline-none"
+                className=" border-2 border-[#7e7c7c4e] tracking-[8px] uppercase focus: font-fira font-bold placeholder:tracking-normal text-xl placeholder:text-center text-center rounded-xl px-2 py-2 focus:outline-none"
                 type="text"
               />
               <input
+                maxLength={6}
+                value={secretPin}
+                onChange={(x) => setSecretPin(x.target.value)}
                 placeholder="PIN"
                 className=" border-2 border-[#7e7c7c4e] text-xl font-medium tracking-[8px] font-fira p-2 placeholder:tracking-normal placeholder:text-center text-center focus:outline-none rounded-xl"
-                type="text"
+                type={isEyeOn ? "text" : "password"}
               />
+              {secretPin && (
+                <span className="absolute -right-8 bottom-3">
+                  {isEyeOn && (
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      onClick={() => setIsEyeOn(false)}
+                      style={{ color: "#0000006d" }}
+                      icon={faEye}
+                    />
+                  )}
+                  {isEyeOn === false && (
+                    <FontAwesomeIcon
+                      className="cursor-pointer"
+                      onClick={() => setIsEyeOn(true)}
+                      style={{ color: "#0000006d" }}
+                      icon={faEyeSlash}
+                    />
+                  )}
+                </span>
+              )}
             </div>
 
             <div className=" text-end">
@@ -71,7 +103,7 @@ const LoginPage = () => {
             </div>
             <button
               style={{ boxShadow: "0px 5px 1px 1px #eb443899" }}
-              className="cursor-pointer mt-6 font-fira font-extrabold  w-full bg-[#EB4338] rounded-full p-2 text-white text-xl"
+              className="cursor-pointer  mt-6 font-fira font-extrabold  w-full bg-[#EB4338] rounded-full p-2 text-white text-xl"
             >
               Login
             </button>
