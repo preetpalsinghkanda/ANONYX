@@ -17,9 +17,9 @@ const ChatSection = () => {
   };
 
   return (
-    <div className="border max-w-160 mt-100  mx-auto ">
-      <div className="border py-3 px-6  rounded-4xl">
-        <div className="flex  border text-2xl font-fira items-center justify-between">
+    <div className="bg-white rounded-2xl flex relative flex-col justify-between ">
+      <div className=" py-3 px-6  rounded-4xl">
+        <div className="flex   text-2xl font-fira items-center justify-between">
           <div>Jack</div>
           <FontAwesomeIcon icon={faBell} />
         </div>
@@ -27,9 +27,9 @@ const ChatSection = () => {
         <div></div>
       </div>
 
-      <div className="relative">
+      <div className="">
         {showEmoji && (
-          <div className="absolute bottom-3 right-16 ">
+          <div className="absolute bottom-16 right-16 ">
             <EmojiPicker
               theme=""
               previewConfig={{ showPreview: false }}
@@ -41,7 +41,7 @@ const ChatSection = () => {
         )}
       </div>
 
-      <div className="border flex gap-6 rounded-full">
+      <div className="border py-1 px-1 flex gap-6 rounded-full">
         <input
           value={message}
           onChange={(x) => setMessage(x.target.value)}
