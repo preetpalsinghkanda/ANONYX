@@ -5,9 +5,9 @@ const ChatBox = () => {
   const [optionChat, setOptionChat] = useState("all");
 
   return (
-    <div className=" flex-col  pl-3 min-w-80 flex item-center ">
+    <div className=" flex-col  pl-3 min-w-90 flex item-center ">
       <div className="flex py-6 flex-col gap-2 items-center">
-        <div className="rounded-full overflow-hidden  border h-25 w-25">
+        <div className="rounded-full overflow-hidden   h-25 w-25">
           <img className="h-full w-full object-fill" src={img[1].url} alt="" />
         </div>
         <div className="flex flex-col items-center">

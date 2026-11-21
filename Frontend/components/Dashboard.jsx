@@ -6,9 +6,9 @@ import ChatBox from "./ChatBox";
 const Dashboard = () => {
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="flex bg-[#EFF5F5] px-8 py-8 rounded-2xl  mx-auto max-w-[85rem]">
+      <div className="flex bg-[#EFF5F5] px-8 py-8 rounded-2xl max-w-7xl  w-full  mx-auto ">
         <Bar />
-        <ChatBox/>
+        <ChatBox />
         <ChatSection />
       </div>
     </div>
