@@ -3,6 +3,8 @@ require("dotenv").config();
 const { Server } = require("socket.io");
 const http = require("http");
 const cors = require("cors");
+const jwt = require("jsonwebtoken")
+const User = require("./models/User.js")
 
 const adminRoutes = require("./routes/admin.js");
 const authRoutes = require('./routes/auth.js')
@@ -23,13 +25,44 @@ const SI = new Server(server, {
   },
 });
 
+
+SI.use(async (socket, next) => {
+
+  try {
+
+    const token = socket.handshake.auth.token
+
+    if (!token) {
+      return next(new Error("Auth Needed"))
+
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_KEY)
+    const user = await User.findById(decoded.id)
+
+
+    if (!user) {
+      return next(new Error("User not Found!"))
+    }
+
+    socket.user = user
+    next()
+
+  } catch (err) {
+
+    console.log(err.message)
+    next(new Error("Expired Token or Invalid Token"))
+  }
+
+})
+
 //handle middleware
 app.use(cors(
 
   {
     origin: "http://localhost:5173",
-    methods : ["GET","POST", "PUT", "DELETE"],
-    credentials : true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
 
   }
 ));
@@ -61,14 +94,14 @@ app.use('/auth', authRoutes)
 
 
 SI.on("connection", (socket) => {
-  console.log(socket.id, "connected");
+  console.log(socket.user.anonyxName, "connected");
 
-  socket.on("send_message", (data) => {
-    console.log("msg", data)
-  })
+  // socket.on("send_message", (data) => {
+  //   console.log("msg", data)
+  // })
 
   socket.on("disconnect", () => {
-    console.log(socket.id, "disconnect");
+    console.log(socket.user.anonyxName, "disconnect");
   });
 });
 

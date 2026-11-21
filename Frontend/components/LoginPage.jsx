@@ -47,6 +47,8 @@ const LoginPage = () => {
     try {
       const res = await api.post("/auth/login", { secretCode, secretPin });
 
+      localStorage.setItem("token",res.data.token)
+
       toast.success("Login Success :)");
     } catch (err) {
       toast.error(err.message || "Login Failed :(");
