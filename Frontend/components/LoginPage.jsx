@@ -14,8 +14,11 @@ import { useGSAP } from "@gsap/react";
 import api from "../src/lib/api";
 import toast from "react-hot-toast";
 import socket from "../src/lib/socket";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [secretCode, setSecretCode] = useState("");
   const [secretPin, setSecretPin] = useState("");
   const [isEyeOn, setIsEyeOn] = useState(false);
@@ -60,6 +63,8 @@ const LoginPage = () => {
       socket.once("connect_error", (err) => {
         console.log("socket err", err.message);
       });
+
+      navigate("/dashboard");
 
       toast.success("Login Success :)");
     } catch (err) {

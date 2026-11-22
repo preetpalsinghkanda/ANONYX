@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell as faBellSolid,
@@ -14,9 +14,11 @@ import {
 import EmojiPicker from "emoji-picker-react";
 import { useEmojiDataState } from "emoji-picker-react/primitives";
 import img from "../src/data/images";
+import socket from "../src/lib/socket";
 
 const ChatSection = () => {
   const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const [showEmoji, setShowEmoji] = useState(false);
 
   const [notification, setNotification] = useState(false);
@@ -25,6 +27,26 @@ const ChatSection = () => {
   const handleEmoji = (emojiIcon) => {
     setMessage((p) => p + emojiIcon.emoji);
   };
+  const handleSendMsg = () => {
+    if (!message.trim()) return;
+
+    socket.emit("send_message", {
+      message: message,
+    });
+    setMessage("");
+  };
+
+  useEffect(() => {
+    const handleReceiveMsg = (data) => {
+      setMessages((p) => [...p, data]);
+    };
+
+    socket.on("receive_message", handleReceiveMsg);
+
+    return () => {
+      socket.off("receive_message", handleReceiveMsg);
+    };
+  }, []);
 
   return (
     <div className="flex items-center gap-1  w-120  relative flex-col justify-between">
@@ -55,7 +77,14 @@ const ChatSection = () => {
             </div>
           </div>
 
-          <div></div>
+          <div className="z-20  text-black border">
+            {messages.map((msg) => (
+              <div className="">
+                <p>{msg.sender?.anonyxName || "user"}</p>
+                <p>{msg.message}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="">
@@ -76,8 +105,11 @@ const ChatSection = () => {
       <div className=" bg-white w-full py-1 px-1 flex gap-6  rounded-bl-2xl rounded-br-3xl rounded-tr-3xl rounded-tl-2xl ">
         <input
           value={message}
+          onKeyDown={(x) => {
+            if (x.key === "Enter") handleSendMsg();
+          }}
           onChange={(x) => setMessage(x.target.value)}
-          placeholder="Type Here..."
+          placeholder="Type here..."
           className="focus:outline-none w-full px-6"
           type="text"
         />
@@ -91,7 +123,10 @@ const ChatSection = () => {
               icon={faFaceGrinWide}
             />
           </button>
-          <button className=" px-5 cursor-pointer flex items-center gap-2 py-2 rounded-full  text-white bg-[#EB4338]">
+          <button
+            onClick={handleSendMsg}
+            className=" px-5 cursor-pointer flex items-center gap-2 py-2 rounded-full  text-white bg-[#EB4338]"
+          >
             Send <FontAwesomeIcon icon={faPaperPlane} />
           </button>
         </div>

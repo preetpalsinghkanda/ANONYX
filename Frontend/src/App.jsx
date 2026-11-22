@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import api from "./lib/api.js";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "../components/Dashboard.jsx";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 const App = () => {
   const mainContainer = useRef(null);
@@ -46,20 +47,34 @@ const App = () => {
   }, []);
 
   return (
-    <div ref={mainContainer} className="h-screen w-full overflow-hidden">
-      <Toaster position="top-right" />
-       <div className="loginText absolute inset-0 ">
-        <Login />
-      </div>
-      <div
-        // style={{ transform: "translateY(100%)" }}
-        className="loginPage  absolute inset-0 "
-      >
-        <LoginPage />
-      </div> 
+    <BrowserRouter>
+      <div ref={mainContainer} className="h-screen w-full overflow-hidden">
+        <Toaster position="top-right" />
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <>
+                <div className="loginText absolute inset-0 ">
+                  <Login />
+                </div>
 
-      {/* <Dashboard/> */}
-    </div>
+                <div
+                  // style={{ transform: "translateY(100%)" }}
+                  className="loginPage  absolute inset-0 "
+                >
+                  <LoginPage />
+                </div>
+              </>
+            }
+          />
+
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
 

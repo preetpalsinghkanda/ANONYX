@@ -57,10 +57,10 @@ const ChatBox = () => {
           Group
         </span>
         <span
-          onClick={() => setOptionChat("request")}
-          className={`${optionChat === "request" ? " border-b-2 text-black" : "border-none text-black/55"} cursor-pointer border-[#ff5e008c] `}
+          onClick={() => setOptionChat("public")}
+          className={`${optionChat === "public" ? " border-b-2 text-black" : "border-none text-black/55"} cursor-pointer border-[#ff5e008c] `}
         >
-          Request
+          Public
         </span>
       </div>
 

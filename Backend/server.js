@@ -99,20 +99,22 @@ app.use('/auth', authRoutes)
 
 SI.on("connection", (socket) => {
   console.log(socket.user.anonyxName, "connected");
+  
 
   // socket.on("send_message", (data) => {
   //   console.log("msg", data)
   // })
 
-  socket.on("join_public", () => {
+  socket.on("join_public", async () => {
 
-    socket.join("public")
-    console.log(socket.user.anonyxName, "Just Joined public chat")
+    await socket.join("public")
+    console.log(socket.user.anonyxName, "Just Joined public chat", socket.rooms.has("public"))
 
   })
 
   socket.on("send_message", async (data) => {
     try {
+      console.log("msg h,data")
       const msgText = data.message?.trim()
 
       if (!msgText || msgText.length > 998) {
@@ -126,14 +128,17 @@ SI.on("connection", (socket) => {
         chatType: "public"
       })
 
+      console.log("mst saved", newMsg._id)
       const savedMessage = await Message.findById(newMsg._id).populate("sender", "anonyxName")
 
+
+      console.log("yeh last 3rd")
 
       SI.to("public").emit("receive_message", savedMessage)
 
 
     } catch (err) {
-      console.log(err.message)
+      console.log("err msg -",err.message)
     }
   })
 
