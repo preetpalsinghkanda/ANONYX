@@ -48,7 +48,7 @@ const App = () => {
   return (
     <div ref={mainContainer} className="h-screen w-full overflow-hidden">
       <Toaster position="top-right" />
-      {/* <div className="loginText absolute inset-0 ">
+       <div className="loginText absolute inset-0 ">
         <Login />
       </div>
       <div
@@ -56,9 +56,9 @@ const App = () => {
         className="loginPage  absolute inset-0 "
       >
         <LoginPage />
-      </div> */}
+      </div> 
 
-      <Dashboard/>
+      {/* <Dashboard/> */}
     </div>
   );
 };

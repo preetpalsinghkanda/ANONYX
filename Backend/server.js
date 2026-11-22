@@ -6,6 +6,8 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken")
 const User = require("./models/User.js")
 
+const Message = require("./models/Message.js")
+
 const adminRoutes = require("./routes/admin.js");
 const authRoutes = require('./routes/auth.js')
 
@@ -56,6 +58,8 @@ SI.use(async (socket, next) => {
 
 })
 
+
+
 //handle middleware
 app.use(cors(
 
@@ -99,6 +103,40 @@ SI.on("connection", (socket) => {
   // socket.on("send_message", (data) => {
   //   console.log("msg", data)
   // })
+
+  socket.on("join_public", () => {
+
+    socket.join("public")
+    console.log(socket.user.anonyxName, "Just Joined public chat")
+
+  })
+
+  socket.on("send_message", async (data) => {
+    try {
+      const msgText = data.message?.trim()
+
+      if (!msgText || msgText.length > 998) {
+        return
+      }
+
+
+      const newMsg = await Message.create({
+        sender: socket.user._id,
+        message: msgText,
+        chatType: "public"
+      })
+
+      const savedMessage = await Message.findById(newMsg._id).populate("sender", "anonyxName")
+
+
+      SI.to("public").emit("receive_message", savedMessage)
+
+
+    } catch (err) {
+      console.log(err.message)
+    }
+  })
+
 
   socket.on("disconnect", () => {
     console.log(socket.user.anonyxName, "disconnect");

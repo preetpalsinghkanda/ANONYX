@@ -36,6 +36,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
+      uppercase: true,
+
     },
 
     isActiveUser: {
