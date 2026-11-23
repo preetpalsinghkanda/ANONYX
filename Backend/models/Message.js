@@ -1,5 +1,5 @@
 const express = require("express");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema({
 
@@ -13,10 +13,20 @@ const messageSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    isChat: {
+    chatType: {
         type: String,
-        enum: ["public", "private"],
+        enum: ["public", "private", "group"],
+        required  : true,
 
+    },
+    publicGroupId :{
+        type : mongoose.Schema.Types.ObjectId,
+        // default:
+        ref : "Room"
+    },
+    receiver : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 
 },
