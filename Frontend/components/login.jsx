@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const Login = () => {
+  const overlay = useRef(null);
+  const box = useRef(null)
+
   useGSAP(() => {
-    gsap.fromTo(
+    const t1 = gsap.timeline({
+      onComplete: () => {
+        gsap.set(overlay.current, {
+          display: "none",
+        });
+      },
+    });
+
+    t1.fromTo(
       ".login span",
       {
         y: 150,
@@ -18,11 +29,14 @@ const Login = () => {
         ease: "power2.out",
       },
     );
-  });
+  },{scope :  box});
 
   return (
-    <div className=" flex h-screen  items-center justify-center relative">
-      <div className=" absolute w-180 h-60 z-2 bg-white bottom-15"></div>
+    <div ref={box} className=" flex h-screen  items-center justify-center relative">
+      <div
+        ref={overlay}
+        className=" absolute w-180 h-60 z-2 bg-white bottom-15"
+      ></div>
 
       <h1
         style={{ fontFamily: "Modak" }}

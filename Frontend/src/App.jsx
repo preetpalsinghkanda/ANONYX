@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Login from "../components/Login.jsx";
 import LoginPage from "../components/LoginPage.jsx";
+import LoginScreen from "../components/LoginScreen.jsx";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import api from "./lib/api.js";
@@ -12,35 +13,7 @@ import GuestRoutes from "../components/GuestRoutes.jsx";
 import ProtectedRoutes from "../components/ProtectedRoutes.jsx";
 
 const App = () => {
-  const mainContainer = useRef(null);
-
-  useGSAP(
-    () => {
-      gsap.set(".loginPage", {
-        yPercent: 100,
-        backgroundColor: "white",
-      });
-      const t1 = gsap.timeline({ delay: 2 });
-
-      t1.to(".loginText", {
-        yPercent: -30,
-        opacity: 0,
-        duration: 1.2,
-        ease: "power2.out",
-      });
-
-      t1.to(
-        ".loginPage",
-        {
-          yPercent: 0,
-          duration: 1.5,
-          ease: "power3.out",
-        },
-        "<",
-      );
-    },
-    { scope: mainContainer },
-  );
+  // const mainContainer = useRef(null);
 
   useEffect(() => {
     api
@@ -51,28 +24,12 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div ref={mainContainer} className="h-screen w-full overflow-hidden">
+      <div className="h-screen w-full overflow-hidden">
         <Toaster position="top-right" />
 
         <Routes>
           <Route element={<GuestRoutes />}>
-            <Route
-              path="/login"
-              element={
-                <>
-                  <div className="loginText absolute inset-0 ">
-                    <Login />
-                  </div>
-
-                  <div
-                    // style={{ transform: "translateY(100%)" }}
-                    className="loginPage  absolute inset-0 "
-                  >
-                    <LoginPage />
-                  </div>
-                </>
-              }
-            />
+            <Route path="/login" element={<LoginScreen />} />
           </Route>
 
           <Route element={<ProtectedRoutes />}>
