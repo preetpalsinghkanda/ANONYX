@@ -52,6 +52,8 @@ const LoginPage = () => {
 
       localStorage.setItem("token", res.data.token);
 
+      localStorage.setItem("userId", res.data.userInfo.id);
+
       socket.auth = { token: res.data.token };
 
       socket.connect();

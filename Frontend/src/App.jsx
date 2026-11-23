@@ -7,6 +7,9 @@ import api from "./lib/api.js";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "../components/Dashboard.jsx";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+// import {}
+import GuestRoutes from "../components/GuestRoutes.jsx";
+import ProtectedRoutes from "../components/ProtectedRoutes.jsx";
 
 const App = () => {
   const mainContainer = useRef(null);
@@ -50,26 +53,31 @@ const App = () => {
     <BrowserRouter>
       <div ref={mainContainer} className="h-screen w-full overflow-hidden">
         <Toaster position="top-right" />
+
         <Routes>
-          <Route
-            path="/login"
-            element={
-              <>
-                <div className="loginText absolute inset-0 ">
-                  <Login />
-                </div>
+          <Route element={<GuestRoutes />}>
+            <Route
+              path="/login"
+              element={
+                <>
+                  <div className="loginText absolute inset-0 ">
+                    <Login />
+                  </div>
 
-                <div
-                  // style={{ transform: "translateY(100%)" }}
-                  className="loginPage  absolute inset-0 "
-                >
-                  <LoginPage />
-                </div>
-              </>
-            }
-          />
+                  <div
+                    // style={{ transform: "translateY(100%)" }}
+                    className="loginPage  absolute inset-0 "
+                  >
+                    <LoginPage />
+                  </div>
+                </>
+              }
+            />
+          </Route>
 
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
 
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
